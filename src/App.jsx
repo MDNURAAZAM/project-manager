@@ -1,3 +1,4 @@
+import AddTask from "./components/AddTask/AddTask";
 import Header from "./components/Header/Header";
 import ProjectContainer from "./components/ProjectContainer/ProjectContainer";
 import Sidebar from "./components/Sidebar/Sidebar";
