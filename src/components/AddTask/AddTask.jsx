@@ -1,13 +1,49 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { getDate, getNextId } from "../../utils";
+import { useTasks } from "../../contexts/TaskContext";
 
 const AddTask = ({ onHide }) => {
+  const { tasks, dispatch } = useTasks();
+
+  const [formData, setFormData] = useState({
+    taskName: "",
+    description: "",
+    date: getDate(),
+    category: "todo",
+  });
+
+  const resetForm = () => {
+    setFormData({
+      taskName: "",
+      description: "",
+      date: getDate(),
+      category: "todo",
+    });
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
   const handleCancelClick = () => {
     onHide();
   };
+
   const handleSubmit = (e) => {
     e.preventDefault();
+    const action = {
+      type: "added",
+      payload: {
+        id: getNextId(tasks),
+        ...formData,
+      },
+    };
+
+    dispatch(action);
     onHide();
   };
+
   return (
     <div className="modal-overlay">
       <div className="modal-content">
@@ -30,6 +66,8 @@ const AddTask = ({ onHide }) => {
                     id="taskName"
                     name="taskName"
                     required
+                    value={formData.taskName}
+                    onChange={handleInputChange}
                     className="w-full rounded-md border border-gray-600 bg-gray-700 px-3 py-2 text-white placeholder-gray-400 shadow-sm focus:border-green-500 focus:outline-none focus:ring-2 focus:ring-green-500"
                   />
                 </div>
@@ -44,20 +82,24 @@ const AddTask = ({ onHide }) => {
                     id="description"
                     name="description"
                     rows="3"
+                    value={formData.description}
+                    onChange={handleInputChange}
                     className="w-full rounded-md border border-gray-600 bg-gray-700 px-3 py-2 text-white placeholder-gray-400 shadow-sm focus:border-green-500 focus:outline-none focus:ring-2 focus:ring-green-500"
                   ></textarea>
                 </div>
                 <div className="mb-4">
                   <label
-                    htmlFor="dueDate"
+                    htmlFor="date"
                     className="mb-1 block text-sm font-medium text-gray-300"
                   >
                     Due Date
                   </label>
                   <input
                     type="date"
-                    id="dueDate"
-                    name="dueDate"
+                    id="date"
+                    name="date"
+                    value={formData.date}
+                    onChange={handleInputChange}
                     className="w-full rounded-md border border-gray-600 bg-gray-700 px-3 py-2 text-white shadow-sm focus:border-green-500 focus:outline-none focus:ring-2 focus:ring-green-500"
                   />
                 </div>
@@ -72,10 +114,12 @@ const AddTask = ({ onHide }) => {
                   <select
                     id="category"
                     name="category"
+                    value={formData.category}
+                    onChange={handleInputChange}
                     className="w-full rounded-md border border-gray-600 bg-gray-700 px-3 py-2 text-white shadow-sm focus:border-green-500 focus:outline-none focus:ring-2 focus:ring-green-500"
                   >
                     <option value="todo">To-Do</option>
-                    <option value="inprogress">On Progress</option>
+                    <option value="onprogress">On Progress</option>
                     <option value="done">Done</option>
                     <option value="revised">Revised</option>
                   </select>
