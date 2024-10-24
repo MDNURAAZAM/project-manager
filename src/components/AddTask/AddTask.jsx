@@ -1,6 +1,13 @@
 import React from "react";
 
-const AddTask = () => {
+const AddTask = ({ onHide }) => {
+  const handleCancelClick = () => {
+    onHide();
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    onHide();
+  };
   return (
     <div className="modal-overlay">
       <div className="modal-content">
@@ -10,7 +17,7 @@ const AddTask = () => {
               <h2 className="mb-6 text-2xl font-bold text-green-400">
                 Create Task
               </h2>
-              <form>
+              <form onSubmit={handleSubmit}>
                 <div className="mb-4">
                   <label
                     htmlFor="taskName"
@@ -76,8 +83,8 @@ const AddTask = () => {
 
                 <div className="flex justify-end space-x-3">
                   <button
-                    type="button"
                     className="rounded-md border border-gray-600 px-4 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 focus:ring-offset-gray-800"
+                    onClick={handleCancelClick}
                   >
                     Cancel
                   </button>
