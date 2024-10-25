@@ -9,7 +9,7 @@ import { getTasks } from "../../utils";
 
 const ProjectContainer = ({ searchText }) => {
   const { tasks } = useTasks();
-  
+
   const filteredTasks = tasks.filter((task) =>
     task?.taskName?.toLowerCase().includes(searchText?.toLowerCase())
   );

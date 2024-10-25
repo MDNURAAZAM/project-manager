@@ -43,3 +43,11 @@ export const getNextId = (items) => {
 export const getTasks = (tasks, category) => {
   return tasks?.filter((task) => task.category === category);
 };
+
+export const sortTasks = (tasks, isAscending) => {
+  return [...tasks]?.sort((a, b) =>
+    isAscending
+      ? new Date(a?.date) - new Date(b?.date)
+      : new Date(b?.date) - new Date(a?.date)
+  );
+};

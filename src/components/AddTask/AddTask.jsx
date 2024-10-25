@@ -26,9 +26,10 @@ const AddTask = ({ onHide }) => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleCancelClick = () => {
-    onHide();
+  const handleCancelClick = (e) => {
+    e.preventDefault();
     resetForm();
+    onHide();
   };
 
   const handleSubmit = (e) => {
@@ -42,8 +43,9 @@ const AddTask = ({ onHide }) => {
     };
 
     dispatch(action);
-    onHide();
     resetForm();
+    onHide();
+    
   };
 
   return (
@@ -129,6 +131,7 @@ const AddTask = ({ onHide }) => {
 
                 <div className="flex justify-end space-x-3">
                   <button
+                    type="submit"
                     className="rounded-md border border-gray-600 px-4 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 focus:ring-offset-gray-800"
                     onClick={handleCancelClick}
                   >
