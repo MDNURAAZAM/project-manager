@@ -20,7 +20,9 @@ const RevisedContainer = ({ tasks }) => {
         </div>
         <div>
           {sortedTasks?.length > 0 ? (
-            sortedTasks?.map((task) => <RevisedItem key={task.id} task={task} />)
+            sortedTasks?.map((task) => (
+              <RevisedItem key={task.id} task={task} />
+            ))
           ) : (
             <p>Revise List is empty</p>
           )}
