@@ -7,6 +7,9 @@ const tasksReducer = (tasks, action) => {
       const { id } = action.payload;
       return tasks.filter((task) => task.id != id);
 
+    case "changed":
+      return [...action.payload.tasks];
+
     default: {
       throw Error("Unknown action: " + action.type);
     }

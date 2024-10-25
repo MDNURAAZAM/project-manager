@@ -38,15 +38,24 @@ const EditTask = ({ onHide, taskId }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const updatedTasks = tasks?.map((task) => {
+      if (task.id == taskId) {
+        return {
+          ...task,
+          ...formData,
+        };
+      } else {
+        return task;
+      }
+    });
     const action = {
-      type: "added",
+      type: "changed",
       payload: {
-        id: getNextId(tasks),
-        ...formData,
+        tasks: updatedTasks,
       },
     };
 
-    // dispatch(action);
+    dispatch(action);
     resetForm();
     onHide();
   };
