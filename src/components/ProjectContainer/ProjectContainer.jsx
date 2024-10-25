@@ -5,20 +5,19 @@ import OnProgressContainer from "../OnProgressContainer/OnProgressContainer";
 import DoneContainer from "../DoneContainer/DoneContainer";
 import RevisedContainer from "../RevisedContainer/RevisedContainer";
 import { useTasks } from "../../contexts/TaskContext";
+import { getTasks } from "../../utils";
 
-const ProjectContainer = () => {
+const ProjectContainer = ({ searchText }) => {
   const { tasks } = useTasks();
   
-  const todoTasks = tasks?.filter((task) => task.category === "todo") || [];
+  const filteredTasks = tasks.filter((task) =>
+    task?.taskName?.toLowerCase().includes(searchText?.toLowerCase())
+  );
 
-  const onProgressTasks =
-    tasks?.filter((task) => task.category === "onprogress") || [];
-
-  const doneTasks = tasks?.filter((task) => task.category === "done") || [];
-
-  const revisedTasks =
-    tasks?.filter((task) => task.category === "revised") || [];
-
+  const todoTasks = getTasks(filteredTasks, "todo") || [];
+  const onProgressTasks = getTasks(filteredTasks, "onprogress") || [];
+  const doneTasks = getTasks(filteredTasks, "done") || [];
+  const revisedTasks = getTasks(filteredTasks, "revised") || [];
 
   return (
     <div className="mx-auto max-w-7xl p-6">

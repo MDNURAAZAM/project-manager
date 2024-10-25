@@ -39,3 +39,7 @@ export const getNextId = (items) => {
   const maxId = items.reduce((max, obj) => (obj.id > max ? obj.id : max), 0);
   return maxId + 1;
 };
+
+export const getTasks = (tasks, category) => {
+  return tasks?.filter((task) => task.category === category);
+};

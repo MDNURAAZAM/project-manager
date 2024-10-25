@@ -3,7 +3,7 @@ import MenuSVG from "../../SVGs/MenuSVG";
 import NotificationSVG from "../../SVGs/NotificationSVG";
 import HeaderMessageSVG from "../../SVGs/HeaderMessageSVG";
 
-const Header = () => {
+const Header = ({ searchText, setSearchText }) => {
   return (
     <header className="flex items-center justify-between bg-gray-800 p-4">
       <button className="lg:hidden">
@@ -14,6 +14,8 @@ const Header = () => {
           type="text"
           placeholder="Search here"
           className="w-full max-w-xl rounded-full bg-gray-700 px-4 py-2 text-white focus:outline-none"
+          value={searchText}
+          onChange={(e) => setSearchText(e.target.value)}
         />
       </div>
       <div className="flex items-center">

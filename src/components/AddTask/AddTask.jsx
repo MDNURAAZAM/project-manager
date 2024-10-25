@@ -28,6 +28,7 @@ const AddTask = ({ onHide }) => {
 
   const handleCancelClick = () => {
     onHide();
+    resetForm();
   };
 
   const handleSubmit = (e) => {
@@ -42,6 +43,7 @@ const AddTask = ({ onHide }) => {
 
     dispatch(action);
     onHide();
+    resetForm();
   };
 
   return (
