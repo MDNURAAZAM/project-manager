@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { getDate, getNextId } from "../../utils";
 import { useTasks } from "../../contexts/TaskContext";
+import { toast } from "react-toastify";
 
 const EditTask = ({ onHide, taskId }) => {
   const { tasks, dispatch } = useTasks();
@@ -37,27 +38,36 @@ const EditTask = ({ onHide, taskId }) => {
   };
 
   const handleSubmit = (e) => {
+    const isValid =
+      formData.taskName?.length > 0 &&
+      formData.description?.length > 0 &&
+      formData.date?.length > 0 &&
+      formData.category?.length > 0;
     e.preventDefault();
-    const updatedTasks = tasks?.map((task) => {
-      if (task.id == taskId) {
-        return {
-          ...task,
-          ...formData,
-        };
-      } else {
-        return task;
-      }
-    });
-    const action = {
-      type: "changed",
-      payload: {
-        tasks: updatedTasks,
-      },
-    };
+    if (isValid) {
+      const updatedTasks = tasks?.map((task) => {
+        if (task.id == taskId) {
+          return {
+            ...task,
+            ...formData,
+          };
+        } else {
+          return task;
+        }
+      });
+      const action = {
+        type: "changed",
+        payload: {
+          tasks: updatedTasks,
+        },
+      };
 
-    dispatch(action);
-    resetForm();
-    onHide();
+      dispatch(action);
+      resetForm();
+      onHide();
+    }else{
+        toast.error('Please enter all the fields')
+    }
   };
 
   return (
@@ -81,7 +91,6 @@ const EditTask = ({ onHide, taskId }) => {
                     type="text"
                     id="taskName"
                     name="taskName"
-                    required
                     value={formData.taskName}
                     onChange={handleInputChange}
                     className="w-full rounded-md border border-gray-600 bg-gray-700 px-3 py-2 text-white placeholder-gray-400 shadow-sm focus:border-green-500 focus:outline-none focus:ring-2 focus:ring-green-500"
@@ -98,6 +107,7 @@ const EditTask = ({ onHide, taskId }) => {
                     id="description"
                     name="description"
                     rows="3"
+                    
                     value={formData.description}
                     onChange={handleInputChange}
                     className="w-full rounded-md border border-gray-600 bg-gray-700 px-3 py-2 text-white placeholder-gray-400 shadow-sm focus:border-green-500 focus:outline-none focus:ring-2 focus:ring-green-500"
